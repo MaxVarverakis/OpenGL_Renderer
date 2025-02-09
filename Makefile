@@ -11,7 +11,7 @@ BUILD_DIR  = build
 TARGET     = $(BUILD_DIR)/main
 
 # Source and object files
-SRCS = $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/main.cpp) $(wildcard vendor/**/*.cpp)
+SRCS = $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/main_template.cpp) $(wildcard vendor/**/*.cpp)
 OBJS = $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 
 # Default target

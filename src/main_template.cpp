@@ -1,3 +1,4 @@
+#include <iostream>
 #include <math.h>
 #include "VertexBuffer/VertexBuffer.hpp"
 #include "IndexBuffer/IndexBuffer.hpp"
@@ -113,7 +114,6 @@ int main()
         VertexArray VAO;
 
         // constructor automatically binds buffer
-        // VertexBuffer VBO(s.coordinates.data(), static_cast<unsigned int>(s.coordinates.size()) * sizeof(float));
         VertexBuffer VBO(vertices, 4 * 8 * sizeof(float));
         
         VertexBufferLayout layout;
@@ -123,7 +123,6 @@ int main()
         VAO.addBuffer(VBO, layout);
 
         // constructor automatically binds buffer
-        // IndexBuffer IBO(s.line_indices.data(), static_cast<unsigned int>(s.line_indices.size()));
         IndexBuffer IBO(indices, 6);
 
         glm::mat4 proj { glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f) };
