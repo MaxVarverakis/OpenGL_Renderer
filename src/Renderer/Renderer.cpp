@@ -43,18 +43,48 @@ void printProgramInfoLog(unsigned int program)
     }
 }
 
-void Renderer::draw(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
+void Renderer::drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
 {
     shader.bind();
     VAO.bind();
     IBO.bind();
 
-    // GLCall(glDrawElements(GL_LINES, static_cast<int>(IBO.getCount()), GL_UNSIGNED_INT, nullptr));
     GLCall(glDrawElements(GL_TRIANGLES, static_cast<int>(IBO.getCount()), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::drawCircles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
+{
+    // just a wrapper for drawTriangles
+    drawTriangles(VAO, IBO, shader);
+}
+
+void Renderer::drawLines(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
+{
+    shader.bind();
+    VAO.bind();
+    IBO.bind();
+
+    GLCall(glDrawElements(GL_LINES, static_cast<int>(IBO.getCount()), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::drawLines(const VertexArray& VAO, const VertexBuffer& VBO, const Shader& shader) const
+{
+    shader.bind();
+    VAO.bind();
+
+    GLCall(glDrawArrays(GL_LINES, 0, static_cast<int>(VBO.size() / (2 * sizeof(float)))));
+}
+
+void Renderer::drawLineStrip(const VertexArray& VAO, const VertexBuffer& VBO, const Shader& shader) const
+{
+    shader.bind();
+    VAO.bind();
+
+    GLCall(glDrawArrays(GL_LINE_STRIP, 0, static_cast<int>(VBO.size() / (2 * sizeof(float)))));
 }
 
 void Renderer::clear() const
 {
-    GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
+    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     GLCall(glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
 }

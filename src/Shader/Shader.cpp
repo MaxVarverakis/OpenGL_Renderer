@@ -6,11 +6,11 @@
 #include <sstream>
 
 
-Shader::Shader(const std::string& filepath)
-    : m_filepath { filepath } // keep `filepath` as member for debugging purposes
+Shader::Shader(const std::string& filepath, const std::string& prefix)
+    : m_filepath { prefix + filepath } // keep `filepath` as member for debugging purposes
     , m_RendererID { 0 }
 {
-    ShaderProgramSource shader_source { parseShader(filepath) };
+    ShaderProgramSource shader_source { parseShader(filepath, prefix) };
     m_RendererID = createShader(shader_source);
 }
 
@@ -19,21 +19,21 @@ Shader::~Shader()
     GLCall(glDeleteProgram(m_RendererID));
 }
 
-ShaderProgramSource Shader::parseShader(const std::string& filepath)
+ShaderProgramSource Shader::parseShader(const std::string& filepath, const std::string& prefix)
 {
     
     std::stringstream VertexSource, FragmentSource;
 
     std::string line;
     
-    std::ifstream vfile(filepath + "/vertex.shader");
+    std::ifstream vfile(filepath + "/" + prefix + "vertex.shader");
     while (std::getline(vfile, line))
     {
         VertexSource << line << '\n';
     }
     vfile.close();
     
-    std::ifstream ffile(filepath + "/fragment.shader");
+    std::ifstream ffile(filepath + "/" + prefix + "fragment.shader");
     while (std::getline(ffile, line))
     {
         FragmentSource << line << '\n';
@@ -86,6 +86,11 @@ void Shader::unbind() const
 void Shader::setUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 {
     GLCall(glUniform4f(getUniformLocation(name), v0, v1, v2, v3));
+}
+
+void Shader::setUniform4f(const std::string& name, float val)
+{
+    GLCall(glUniform4f(getUniformLocation(name), val, val, val, val));
 }
 
 void Shader::setUniform1f(const std::string& name, float value)

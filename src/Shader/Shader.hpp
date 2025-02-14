@@ -19,7 +19,7 @@ private:
     unsigned int m_RendererID;
     std::unordered_map<std::string, int> m_uniform_location_cache;
 
-    ShaderProgramSource parseShader(const std::string& filepath);
+    ShaderProgramSource parseShader(const std::string& filepath, const std::string& prefix);
 
     unsigned int compileShader(unsigned int type, const std::string& source);
 
@@ -28,7 +28,7 @@ private:
     int getUniformLocation(const std::string& name);
 
 public:
-    Shader(const std::string& filepath);
+    Shader(const std::string& filepath, const std::string& prefix = "");
     
     ~Shader();
 
@@ -37,6 +37,8 @@ public:
     void unbind() const;
     
     void setUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
+
+    void setUniform4f(const std::string& name, float val);
     
     void setUniform1i(const std::string& name, int value);
     

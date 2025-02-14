@@ -16,6 +16,11 @@ SRCS = $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(VENDOR_DIR)/**/*.cpp)
 OBJS = $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 TARGET = $(LIB_DIR)/libopenglframework.a
 
+# Test executable specific
+TEST_SRC = $(SRC_DIR)/main_template.cpp
+TEST_OBJ = $(BUILD_DIR)/src/main_template.o
+TEST_EXEC = $(BUILD_DIR)/test_executable
+
 # Target to build the framework static library
 all: $(TARGET)
 
@@ -24,6 +29,15 @@ $(TARGET): $(OBJS)
 	ar rcs $@ $^
 
 $(BUILD_DIR)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Target to compile and link the test executable
+$(TEST_EXEC): $(TEST_OBJ) $(TARGET)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $^ $(LDFLAGS) $(LINKER_FLAGS)
+
+# Rule to compile test object files
+$(BUILD_DIR)/src/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 

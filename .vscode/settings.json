@@ -47,6 +47,11 @@
         "algorithm": "cpp",
         "__config": "cpp",
         "unordered_map": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "complex": "cpp",
+        "execution": "cpp",
+        "sstream": "cpp"
     }
 }

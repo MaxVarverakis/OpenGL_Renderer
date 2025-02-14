@@ -28,7 +28,15 @@ void printProgramInfoLog(unsigned int program);
 class Renderer
 {
 public:
-    void draw(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
+    void drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
     
+    void drawCircles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
+
+    void drawLines(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
+    
+    void drawLines(const VertexArray& VAO, const VertexBuffer& VBO, const Shader& shader) const;
+    
+    void drawLineStrip(const VertexArray& VAO, const VertexBuffer& VBO, const Shader& shader) const;
+
     void clear() const;
 };
