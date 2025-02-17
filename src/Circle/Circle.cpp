@@ -27,10 +27,10 @@ Circle::Circle(glm::vec2 origin, float radius, glm::vec4 color, float inner_radi
     , m_color { color }
     , m_inner_radius { inner_radius }
 {
-    unsigned int sum { 0 };
-    for (const unsigned int val : Circle::layout_descriptor) { sum += val; }
+    unsigned int m_layout_total { 0 };
+    for (const unsigned int val : Circle::layout_descriptor) { m_layout_total += val; }
 
-    m_vertices.reserve(3 * sum);
+    m_vertices.reserve(3 * m_layout_total);
     fillVertices();
 }
 
@@ -56,25 +56,29 @@ void Circle::fillVertices()
         
         // inner radius
         m_vertices.push_back(m_inner_radius);
-        
-        
-        // unsigned int start_idx { 9 * i };
-
-        // vertex position for quad
-        // m_vertices[start_idx    ] = vertex_positions[i  ];
-        // m_vertices[start_idx + 1] = vertex_positions[i+1];
-        
-        // color
-        // m_vertices[start_idx + 2] = m_color[0];
-        // m_vertices[start_idx + 3] = m_color[1];
-        // m_vertices[start_idx + 4] = m_color[2];
-        // m_vertices[start_idx + 5] = m_color[3];
-
-        // circle center/location
-        // m_vertices[start_idx + 6] = m_origin[0];
-        // m_vertices[start_idx + 7] = m_origin[1];
-
-        // radius
-        // m_vertices[start_idx + 8] = m_radius;
     }
 }
+
+// void Circle::updateCircleVertices()
+// {
+//     for (unsigned int i = 0; i < 3; ++i)
+//     {
+//         unsigned int start_idx { m_layout_total * i + 2 };
+
+//         // color
+//         m_vertices[start_idx    ] = m_color[0];
+//         m_vertices[start_idx + 1] = m_color[1];
+//         m_vertices[start_idx + 2] = m_color[2];
+//         m_vertices[start_idx + 3] = m_color[3];
+
+//         // circle center/location
+//         m_vertices[start_idx + 4] = m_origin[0];
+//         m_vertices[start_idx + 5] = m_origin[1];
+
+//         // radius
+//         m_vertices[start_idx + 6] = m_radius;
+        
+//         // inner radius
+//         m_vertices[start_idx + 7] = m_radius;
+//     }
+// }

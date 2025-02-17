@@ -21,12 +21,16 @@ private:
     static const float vertex_positions[6];
 
     void fillVertices();
-public:
+    public:
     static const unsigned int indices[3];
     static const unsigned int layout_descriptor[5];
+    // static unsigned int m_layout_total;
     Circle(glm::vec2 origin, float radius, glm::vec4 color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f), float inner_radius = 0.0f);
-
+    
     const std::vector<float> vertices() const { return m_vertices; }
+    void setColor(glm::vec4 col) { m_color = col; }
+
+    // void updateCircleVertices();
 };
 
 struct Circles
@@ -59,5 +63,54 @@ struct Circles
         const unsigned int vertex_offset = static_cast<unsigned int>(m_indices.size());
         for (unsigned int i = 0; i < 3; ++i) { m_indices.emplace_back(vertex_offset + i); }
     }
+
+    void udpateColors(const std::vector<glm::vec4>& colors)
+    {
+        // can only be run after a `Circle` is initialized
+        unsigned int i { 0 };
+        while (i < m_vertices.size())
+        {
+            const glm::vec4& color { colors[i/30] };
+            for (unsigned int j = 0; j < 3; ++j)
+            {
+                // since 3 vertices per circle
+                unsigned int start_idx { i + 10 * j + 2 };
+                m_vertices[start_idx    ] = color[0];
+                m_vertices[start_idx + 1] = color[1];
+                m_vertices[start_idx + 2] = color[2];
+                m_vertices[start_idx + 3] = color[3];
+            }
+            
+            i += 3 * 10;
+        }
+    }
+    
+    void udpateColors(const std::vector<float>& colors)
+    {
+        unsigned int i { 0 };
+        while (i < m_vertices.size())
+        {
+            const float& color { colors[i/30] };
+            for (unsigned int j = 0; j < 3; ++j)
+            {
+                // since 3 vertices per circle
+                unsigned int start_idx { i + 10 * j + 2 };
+                
+                m_vertices[start_idx    ] = color;
+                m_vertices[start_idx + 1] = color;
+                m_vertices[start_idx + 2] = color;
+            }
+            
+            i += 3 * 10;
+        }
+    }
+
+    // void updateVertices(std::vector<Circle>& circles)
+    // {
+    //     for (Circle& circle : circles)
+    //     {
+    //         circle.updateCircleVertices();
+    //     }
+    // }
 
 };
