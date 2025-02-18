@@ -24,8 +24,10 @@ void VertexBuffer::unbind() const
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
-void VertexBuffer::rebuffer(const void* data, unsigned int size, const unsigned int draw_type)
+void VertexBuffer::rebuffer(const void* data, const unsigned int size, const unsigned int draw_type)
 {
+    m_size = size;
+
     bind();
     GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, draw_type));
     unbind();

@@ -16,6 +16,6 @@ public:
 
     void bind() const;
     void unbind() const;
-    void rebuffer(const void* data, unsigned int size, const unsigned int draw_type = GL_STATIC_DRAW);
+    void rebuffer(const void* data, const unsigned int size, const unsigned int draw_type = GL_STATIC_DRAW);
     void updateBuffer(const void* data);
 };
