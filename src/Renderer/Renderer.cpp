@@ -58,6 +58,12 @@ void Renderer::drawCircles(const VertexArray& VAO, const IndexBuffer& IBO, const
     drawTriangles(VAO, IBO, shader);
 }
 
+void Renderer::drawRectangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
+{
+    // just a wrapper for drawTriangles
+    drawTriangles(VAO, IBO, shader);
+}
+
 void Renderer::drawLines(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
 {
     shader.bind();

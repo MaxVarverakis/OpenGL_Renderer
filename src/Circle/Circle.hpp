@@ -21,7 +21,7 @@ private:
     static const float vertex_positions[6];
 
     void fillVertices();
-    public:
+public:
     static const unsigned int indices[3];
     static const unsigned int layout_descriptor[5];
     // static unsigned int m_layout_total;
