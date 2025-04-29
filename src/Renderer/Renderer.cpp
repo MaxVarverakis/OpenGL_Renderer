@@ -43,6 +43,13 @@ void printProgramInfoLog(unsigned int program)
     }
 }
 
+void Renderer::drawTriangles(const VertexArray& VAO, const Shader& shader) const
+{
+    shader.bind();
+    VAO.bind();
+    GLCall(glDrawArrays(GL_TRIANGLES, 0, 3));
+}
+
 void Renderer::drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
 {
     shader.bind();
@@ -89,8 +96,8 @@ void Renderer::drawLineStrip(const VertexArray& VAO, const VertexBuffer& VBO, co
     GLCall(glDrawArrays(GL_LINE_STRIP, 0, static_cast<int>(VBO.size() / (2 * sizeof(float)))));
 }
 
-void Renderer::clear(float alpha) const
+void Renderer::clear() const
 {
-    GLCall(glClearColor(0.0f, 0.0f, 0.0f, alpha));
+    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     GLCall(glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
 }

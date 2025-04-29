@@ -28,6 +28,8 @@ void printProgramInfoLog(unsigned int program);
 class Renderer
 {
 public:
+    void drawTriangles(const VertexArray& VAO, const Shader& shader) const;
+    
     void drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
     
     void drawCircles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
@@ -40,5 +42,5 @@ public:
     
     void drawLineStrip(const VertexArray& VAO, const VertexBuffer& VBO, const Shader& shader) const;
 
-    void clear(float alpha = 0.0f) const;
+    void clear() const;
 };

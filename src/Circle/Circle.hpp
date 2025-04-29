@@ -64,7 +64,7 @@ struct Circles
         for (unsigned int i = 0; i < 3; ++i) { m_indices.emplace_back(vertex_offset + i); }
     }
 
-    void udpateColors(const std::vector<glm::vec4>& colors)
+    void updateColors(const std::vector<glm::vec4>& colors)
     {
         // can only be run after a `Circle` is initialized
         unsigned int i { 0 };
@@ -85,7 +85,7 @@ struct Circles
         }
     }
     
-    void udpateColors(const std::vector<float>& colors)
+    void updateColors(const std::vector<float>& colors)
     {
         unsigned int i { 0 };
         while (i < m_vertices.size())
@@ -112,5 +112,36 @@ struct Circles
     //         circle.updateCircleVertices();
     //     }
     // }
+
+    void updatePositions(const std::vector<glm::vec2>& positions)
+    {
+        // can only be run after a `Circle` is initialized
+        unsigned int i { 0 };
+        while (i < m_vertices.size())
+        {
+            const glm::vec2& position { positions[i/30] };
+            for (unsigned int j = 0; j < 3; ++j)
+            {
+                // since 3 vertices per circle
+                unsigned int start_idx { i + 10 * j + 6 };
+                m_vertices[start_idx    ] = position[0];
+                m_vertices[start_idx + 1] = position[1];
+            }
+            
+            i += 3 * 10;
+        }
+    }
+    
+    void updatePosition(unsigned int idx, const glm::vec2& position)
+    {
+        // can only be run after a `Circle` is initialized
+        for (unsigned int j = 0; j < 3; ++j)
+        {
+            // since 3 vertices per circle
+            unsigned int start_idx { 30 * idx + 10 * j + 6 };
+            m_vertices[start_idx    ] = position[0];
+            m_vertices[start_idx + 1] = position[1];
+        }
+    }
 
 };
