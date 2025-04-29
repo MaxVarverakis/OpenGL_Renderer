@@ -89,8 +89,8 @@ void Renderer::drawLineStrip(const VertexArray& VAO, const VertexBuffer& VBO, co
     GLCall(glDrawArrays(GL_LINE_STRIP, 0, static_cast<int>(VBO.size() / (2 * sizeof(float)))));
 }
 
-void Renderer::clear() const
+void Renderer::clear(float alpha) const
 {
-    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    GLCall(glClearColor(0.0f, 0.0f, 0.0f, alpha));
     GLCall(glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
 }

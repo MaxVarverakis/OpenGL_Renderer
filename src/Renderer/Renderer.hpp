@@ -40,5 +40,5 @@ public:
     
     void drawLineStrip(const VertexArray& VAO, const VertexBuffer& VBO, const Shader& shader) const;
 
-    void clear() const;
+    void clear(float alpha = 0.0f) const;
 };
