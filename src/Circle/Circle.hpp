@@ -104,14 +104,57 @@ struct Circles
             i += 3 * 10;
         }
     }
-
-    // void updateVertices(std::vector<Circle>& circles)
-    // {
-    //     for (Circle& circle : circles)
-    //     {
-    //         circle.updateCircleVertices();
-    //     }
-    // }
+    
+    void updateColor(unsigned int idx, float color)
+    {
+        for (unsigned int j = 0; j < 3; ++j)
+        {
+            // since 3 vertices per circle
+            unsigned int start_idx { 30 * idx + 10 * j + 2 };
+            
+            m_vertices[start_idx    ] = color;
+            m_vertices[start_idx + 1] = color;
+            m_vertices[start_idx + 2] = color;
+        }
+    }
+    
+    void updateAlpha(unsigned int idx, float alpha)
+    {
+        for (unsigned int j = 0; j < 3; ++j)
+        {
+            // since 3 vertices per circle
+            unsigned int start_idx { 30 * idx + 10 * j + 5 };
+            
+            m_vertices[start_idx] = alpha;
+        }
+    }
+    
+    void updateColor(unsigned int idx, const glm::vec3& color)
+    {
+        for (unsigned int j = 0; j < 3; ++j)
+        {
+            // since 3 vertices per circle
+            unsigned int start_idx { 30 * idx + 10 * j + 2 };
+            
+            m_vertices[start_idx    ] = color.r;
+            m_vertices[start_idx + 1] = color.g;
+            m_vertices[start_idx + 2] = color.b;
+        }
+    }
+    
+    void updateColor(unsigned int idx, const glm::vec4& color)
+    {
+        for (unsigned int j = 0; j < 3; ++j)
+        {
+            // since 3 vertices per circle
+            unsigned int start_idx { 30 * idx + 10 * j + 2 };
+            
+            m_vertices[start_idx    ] = color.r;
+            m_vertices[start_idx + 1] = color.g;
+            m_vertices[start_idx + 2] = color.b;
+            m_vertices[start_idx + 3] = color.a;
+        }
+    }
 
     void updatePositions(const std::vector<glm::vec2>& positions)
     {
