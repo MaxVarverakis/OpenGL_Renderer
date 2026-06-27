@@ -96,4 +96,73 @@ struct Rectangles
             i += 4 * 8;
         }
     }
+
+    void updateAlpha(unsigned int idx, float alpha)
+    {
+        for (unsigned int j = 0; j < 4; ++j)
+        {
+            // since 4 vertices per rectangle
+            unsigned int start_idx { 32 * idx + 8 * j + 5 };
+            
+            m_vertices[start_idx] = alpha;
+        }
+    }
+    
+    void updateColor(unsigned int idx, const glm::vec3& color)
+    {
+        for (unsigned int j = 0; j < 4; ++j)
+        {
+            // since 4 vertices per rectangle
+            unsigned int start_idx { 32 * idx + 8 * j + 2 };
+            
+            m_vertices[start_idx    ] = color.r;
+            m_vertices[start_idx + 1] = color.g;
+            m_vertices[start_idx + 2] = color.b;
+        }
+    }
+    
+    void updateColor(unsigned int idx, const glm::vec4& color)
+    {
+        for (unsigned int j = 0; j < 4; ++j)
+        {
+            // since 4 vertices per rectangle
+            unsigned int start_idx { 32 * idx + 8 * j + 2 };
+            
+            m_vertices[start_idx    ] = color.r;
+            m_vertices[start_idx + 1] = color.g;
+            m_vertices[start_idx + 2] = color.b;
+            m_vertices[start_idx + 3] = color.a;
+        }
+    }
+
+    void updatePositions(const std::vector<glm::vec2>& positions)
+    {
+        // can only be run after a `Rectangle` is initialized
+        unsigned int i { 0 };
+        while (i < m_vertices.size())
+        {
+            const glm::vec2& position { positions[i/32] };
+            for (unsigned int j = 0; j < 4; ++j)
+            {
+                // since 4 vertices per rectangle
+                unsigned int start_idx { i + 8 * j + 6 };
+                m_vertices[start_idx    ] = position[0];
+                m_vertices[start_idx + 1] = position[1];
+            }
+            
+            i += 4 * 8;
+        }
+    }
+    
+    void updatePosition(unsigned int idx, const glm::vec2& position)
+    {
+        // can only be run after a `Rectangle` is initialized
+        for (unsigned int j = 0; j < 4; ++j)
+        {
+            // since 4 vertices per rectangle
+            unsigned int start_idx { 32 * idx + 8 * j + 6 };
+            m_vertices[start_idx    ] = position[0];
+            m_vertices[start_idx + 1] = position[1];
+        }
+    }
 };
