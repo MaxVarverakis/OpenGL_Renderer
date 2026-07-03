@@ -59,6 +59,15 @@ void Renderer::drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, con
     GLCall(glDrawElements(GL_TRIANGLES, static_cast<int>(IBO.getCount()), GL_UNSIGNED_INT, nullptr));
 }
 
+void Renderer::drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader, int instanceCount) const
+{
+    shader.bind();
+    VAO.bind();
+    IBO.bind();
+
+    GLCall(glDrawElementsInstanced(GL_TRIANGLES, static_cast<int>(IBO.getCount()), GL_UNSIGNED_INT, nullptr, instanceCount));
+}
+
 void Renderer::drawCircles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const
 {
     // just a wrapper for drawTriangles

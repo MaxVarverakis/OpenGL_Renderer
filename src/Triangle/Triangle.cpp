@@ -25,7 +25,7 @@ Triangle::Triangle(glm::vec2 v2, glm::vec2 v3, glm::vec4 color)
 
 void Triangle::fillVertices()
 {
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < 3; ++i)
     {
         // bottom left is origin/location
         switch (i)

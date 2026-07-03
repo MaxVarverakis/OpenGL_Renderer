@@ -32,6 +32,8 @@ public:
     
     void drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
     
+    void drawTriangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader, int instanceCount) const;
+    
     void drawCircles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;
     
     void drawRectangles(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader) const;

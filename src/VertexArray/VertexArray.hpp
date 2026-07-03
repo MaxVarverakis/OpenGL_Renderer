@@ -15,6 +15,8 @@ public:
     ~VertexArray();
 
     void addBuffer(const VertexBuffer& VBO, const VertexBufferLayout& layout);
+    
+    void addInstancedBuffer(const VertexBuffer& VBO, unsigned int startLocation);
 
     void bind() const;
     void unbind() const;
