@@ -39,7 +39,7 @@ void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, unsigned int start
 
     // mat4 has 4 vec4s
     unsigned int vec4Size = 4 * sizeof(float);
-    unsigned int mat4Size = 4 * sizeof(glm::mat4);
+    unsigned int mat4Size = sizeof(glm::mat4);
 
     for (unsigned int i = 0; i < 4; ++i)
     {
