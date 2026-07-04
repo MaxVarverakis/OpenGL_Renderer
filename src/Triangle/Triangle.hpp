@@ -7,7 +7,7 @@
 class Triangle
 {
 private:
-    glm::vec2 m_v2, m_v3;
+    glm::vec2 m_v1, m_v2, m_v3;
     glm::vec4 m_color;
     
     std::vector<float> m_vertices;
@@ -17,7 +17,7 @@ public:
     static const unsigned int indices[3];
     static const unsigned int layout_descriptor[2];
 
-    Triangle(glm::vec2 v2, glm::vec2 v3, glm::vec4 color);
+    Triangle(glm::vec2 v1, glm::vec2 v2, glm::vec2 v3, glm::vec4 color);
     const std::vector<float> vertices() const { return m_vertices; }
     void setColor(glm::vec4 col) { m_color = col; }
 };
