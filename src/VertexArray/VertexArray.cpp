@@ -32,22 +32,28 @@ void VertexArray::addBuffer(const VertexBuffer& VBO, const VertexBufferLayout& l
     }
 }
 
-void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, unsigned int startLocation)
+void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, unsigned int startLocation, unsigned int componentCount)
 {
     bind();
     VBO.bind();
 
-    // mat4 has 4 vec4s
-    unsigned int vec4Size = 4 * sizeof(float);
-    unsigned int mat4Size = sizeof(glm::mat4);
+    // Use ceiling division so 6 components properly results in 2 slots (6 + 3) / 4 = 2
+    unsigned int numSlots = (componentCount + 3) / 4;
+    int totalStride = static_cast<int>(componentCount * sizeof(float));
 
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < numSlots; ++i)
     {
         unsigned int location = startLocation + i;
-        uintptr_t offset = i * vec4Size;
+        uintptr_t offset = i * 4 * sizeof(float);
+
+        // how many elements are left for this specific slot channel
+        // For i=0 (components=6): min(4, 6 - 0) -> 4
+        // For i=1 (components=6): min(4, 6 - 4) -> 2
+        int remainingComponents = static_cast<int>(componentCount) - static_cast<int>(i * 4);
+        int slotSize = std::min<int>(4, remainingComponents);
 
         GLCall(glEnableVertexAttribArray(location));
-        GLCall(glVertexAttribPointer(location, 4, GL_FLOAT, GL_FALSE, static_cast<int>(mat4Size), (const void*) offset));
+        GLCall(glVertexAttribPointer(location, slotSize, GL_FLOAT, GL_FALSE, totalStride, (const void*) offset));
 
         // only draw once per instance, not per vertex
         GLCall(glVertexAttribDivisor(location, 1));

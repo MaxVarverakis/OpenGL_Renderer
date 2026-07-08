@@ -16,7 +16,7 @@ public:
 
     void addBuffer(const VertexBuffer& VBO, const VertexBufferLayout& layout);
     
-    void addInstancedBuffer(const VertexBuffer& VBO, unsigned int startLocation);
+    void addInstancedBuffer(const VertexBuffer& VBO, unsigned int startLocation, unsigned int componentCount);
 
     void bind() const;
     void unbind() const;
