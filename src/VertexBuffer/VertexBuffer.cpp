@@ -36,6 +36,21 @@ void VertexBuffer::rebuffer(const void* data, const unsigned int size, const uns
 void VertexBuffer::updateBuffer(const void* data)
 {
     bind();
-    GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, m_size, data));
+    // GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, m_size, data));
+
+    // orphan the old storage
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        m_size,
+        nullptr,
+        GL_DYNAMIC_DRAW);
+
+    // upload into fresh storage
+    glBufferSubData(
+        GL_ARRAY_BUFFER,
+        0,
+        m_size,
+        data);
+
     unbind();
 }
