@@ -25,14 +25,36 @@ void VertexArray::addBuffer(const VertexBuffer& VBO, const VertexBufferLayout& l
         const VertexBufferElement& element { elements[i] };
 
         GLCall(glEnableVertexAttribArray(i));
-        GLCall(glVertexAttribPointer(i, static_cast<int>(element.count), element.type, element.normalized, static_cast<int>(layout.getStride()), (const void*) offset));
+        GLCall(glVertexAttribPointer(i, static_cast<int>(element.count), element.type, element.normalized, static_cast<int>(layout.getStride()), reinterpret_cast<const void*>(offset)));
 
         offset += element.count * VertexBufferElement::getSizeOfType(element.type);
 
     }
 }
 
-void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, unsigned int startLocation, unsigned int componentCount)
+void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, const VertexBufferLayout& layout, unsigned int startLocation)
+{
+    bind();
+    VBO.bind();
+
+    const std::vector<VertexBufferElement>& elements { layout.getElements() };
+    uintptr_t offset { 0 };
+
+    for (unsigned int i = 0; i < elements.size(); ++i)
+    {
+        unsigned int location = startLocation + i;
+        const VertexBufferElement& element { elements[i] };
+
+        GLCall(glEnableVertexAttribArray(location));
+        GLCall(glVertexAttribPointer(location, static_cast<int>(element.count), element.type, element.normalized, static_cast<int>(layout.getStride()), reinterpret_cast<const void*>(offset)));
+        // only draw once per instance, not per vertex
+        GLCall(glVertexAttribDivisor(location, 1));
+
+        offset += element.count * VertexBufferElement::getSizeOfType(element.type);
+    }
+}
+
+void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, unsigned int componentCount, unsigned int startLocation)
 {
     bind();
     VBO.bind();
@@ -53,7 +75,7 @@ void VertexArray::addInstancedBuffer(const VertexBuffer& VBO, unsigned int start
         int slotSize = std::min<int>(4, remainingComponents);
 
         GLCall(glEnableVertexAttribArray(location));
-        GLCall(glVertexAttribPointer(location, slotSize, GL_FLOAT, GL_FALSE, totalStride, (const void*) offset));
+        GLCall(glVertexAttribPointer(location, slotSize, GL_FLOAT, GL_FALSE, totalStride, reinterpret_cast<const void*>(offset)));
 
         // only draw once per instance, not per vertex
         GLCall(glVertexAttribDivisor(location, 1));
