@@ -44,6 +44,8 @@ public:
     
     void setUniform1i(const std::string& name, int value);
     
+    void setUniform1iv(const std::string& name, const std::vector<int>& values);
+
     void setUniform1f(const std::string& name, float value);
     
     void setUniformMatrix4fv(const std::string& name, const glm::mat4 matrix);
